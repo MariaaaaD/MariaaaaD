@@ -1,0 +1,15 @@
+#lang scheme
+
+(define (height tree)
+  (if (empty? tree)
+      0
+      (+ 1 (max (height (lTree tree)) (height (rTree tree))))
+      )
+  )
+
+(define (leaves tree)
+  (cond [(and (empty? (lTree tree)) (empty? (rTree tree))) 1]
+        [(or (empty? (lTree tree)) (empty? (rTree tree))) 1]
+        [else (+ (leaves (lTree tree)) (leaves (rTree tree)))]
+        )
+  )

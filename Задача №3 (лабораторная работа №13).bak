@@ -1,0 +1,26 @@
+#lang racket
+
+;ищет минимальное число в списке
+(define (minimiser lst)
+  (foldl (λ (x y) (min x y)) (car lst) lst)
+  )
+
+;находит минимальные числа в каждой строке
+(define (micro matr)
+  (map (λ (x) (minimiser x)) matr)
+  )
+
+;ищет номер вхождения элемента в списке
+(define (chercheur lst a)
+  (foldl (λ (x y) (cond [(= x a) y] [(or (ormap (λ (z) (= x z)) (cdr (member a lst))) (not (ormap (λ (m) (= x m)) (fun lst (member a lst)))))  y] [(ormap (λ (m) (= x m)) (fun lst (member a lst))) (+ y 1)]  [else (+ y 1)])) 0 lst)
+  )
+
+;ищет номер столбца, где расположено число
+(define (column matr)
+  (map (λ (x y) (chercheur x y)) matr (micro matr))
+  )
+
+;удаляет список из другого списка
+(define (fun lst liste)
+  (foldl (λ (x y) (remove x y)) lst liste)
+  )

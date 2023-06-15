@@ -1,0 +1,11 @@
+#lang racket
+
+;формирует столбцы
+(define (column matr)
+  (map (λ (x) (map (λ (y) (list-ref y x)) matr)) (map (λ (k) (- k 1)) (build-list (length (car matr)) (λ (m) (+ m 1)))))
+  )
+
+;проверяет равенство
+(define (verify matr)
+  (ormap (λ (x y) (andmap (λ (z k) (= z k)) x y)) matr (column matr))
+  )

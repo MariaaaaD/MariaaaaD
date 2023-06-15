@@ -1,0 +1,13 @@
+#lang racket
+
+(define (gap str2)
+  (map (λ (x) (string x)) (string->list str2))
+  )
+
+(define (maker str1 str2)
+  (filter (λ (k) (ormap (λ (y) (string=? (string (string-ref str1 k)) y)) (gap str2))) (build-list (string-length str1) +))
+  )
+
+(define (createur str1 str2)
+  (map (λ (x y) (substring str1 x y)) (map (λ (k) (+ k 1)) (take (maker str1 str2) (- (length (maker str1 str2)) 1))) (cdr (maker str1 str2)))
+  )

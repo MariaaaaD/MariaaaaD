@@ -1,0 +1,17 @@
+#lang racket
+
+(define (^ a b)
+  (expt a b)
+  )
+
+(define (% a b)
+  (remainder a b)
+  )
+
+(define (// a b)
+  (quotient a b)
+  )
+
+(define (pair x k)
+  (cons (// x (^ 10 k)) (% x (^ 10 k)))
+  )

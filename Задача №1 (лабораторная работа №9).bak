@@ -1,0 +1,40 @@
+#lang racket
+
+(define (// a b)
+  (quotient a b)
+  )
+
+(define (% a b)
+  (remainder a b)
+  )
+
+(define (^ a b)
+  (expt a b)
+  )
+
+(define (composition n)
+  (define (iter del chiffre rez)
+    (cond [(= (// chiffre del) 0) (reverse rez)]
+          [else (if (= (% chiffre del) 0)
+                    (iter (+ del 1) (// chiffre del) (cons del rez))
+                    (iter (+ del 1) chiffre rez)
+                    )
+                ]
+          )
+    )
+  (iter 2 n '())
+  )
+
+(define (pair n)
+  (define (iter el lst step rez num)
+    (cond [(= num 1) rez]
+          [else (if (= (% num el) 0)
+                    (iter el lst (+ step 1) rez (// num el))
+                    (iter (car lst) (cdr lst) 1 (cons (cons (car lst) step) rez) num)
+                    )
+                ]
+          )
+    )
+  (iter (car (composition n)) (composition n) 0 '() n)
+  )
+                   

@@ -1,0 +1,8 @@
+#lang scheme
+
+(define (check? tree)
+  (cond [(and (empty? (lTree tree)) (empty? (rTree tree))) #t]
+        [(or (empty? (lTree tree)) (empty? (rTree tree))) #f]
+        [else (and (check? (lTree tree)) (check? (rTree tree)))]
+        )
+  )

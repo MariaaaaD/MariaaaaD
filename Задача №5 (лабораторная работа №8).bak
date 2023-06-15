@@ -1,0 +1,33 @@
+#lang racket
+
+(define (// a b)
+  (quotient a b)
+  )
+
+(define (^ a b)
+  (expt a b)
+  )
+
+(define (length a)
+  (define (iter lst rez)
+    (if (empty? lst) rez
+        (iter (cdr lst) (+ rez 1))
+        )
+    )
+  (iter a 0)
+  )
+
+(define (find a k)
+  (define (iter num chiffre number rez lst)
+    (cond [(= num (length a)) (reverse rez)]
+          [else (if (or (and (< (// chiffre (^ 10 (- k 1))) 10) (> (// chiffre (^ 10 (- k 1))) 0)) (and (< (// (car lst) (^ 10 (- k 1))) 10) (> (// (car lst) (^ 10 (- k 1))) 0)))
+                    (if (and (and (< (// chiffre (^ 10 (- k 1))) 10) (> (// chiffre (^ 10 (- k 1))) 0)) (and (< (// (car lst) (^ 10 (- k 1))) 10) (> (// (car lst) (^ 10 (- k 1))) 0)))
+                        (iter (+ num 1) number (car lst) (cons (* (car lst) chiffre) rez) (cdr lst))
+                        (iter (+ num 1) number (car lst) rez (cdr lst))
+                        )
+                     (iter (+ num 1) number (car lst) rez (cdr lst)))
+                ]
+          )
+    )
+  (iter 1 (car a) (car (cdr a)) '() (cdr a))
+  )

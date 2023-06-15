@@ -1,0 +1,42 @@
+#lang racket
+
+(define (compare_r pol1 pol2)
+  (if (< (length pol1) (length pol2))
+      (- (length pol1) 1)
+      (- (length pol2) 1)
+      )
+  )
+
+(define (compare_l pol1 pol2)
+  (if (> (length pol1) (length pol2))
+      (- (length pol1) 1)
+      (- (length pol2) 1)
+      )
+  )
+
+(define (largest pol1 pol2)
+  (if (> (length pol2) (length pol1))
+      pol2
+      pol1
+      )
+  )
+
+(define (smallest pol1 pol2)
+  (if (< (length pol1) (length pol2))
+      pol1
+      pol2
+      )
+  )
+
+
+(define (field pol1 pol2 k)
+  (cond [(<= k (compare_r pol1 pol2)) (foldl (λ (i y) (+ (* (list-ref (reverse (largest pol1 pol2)) (- (compare_l pol1 pol2) i)) (list-ref (reverse (smallest pol1 pol2)) (+ (- (compare_r pol1 pol2) k) i))) y)) 0 (build-list (+ k 1) +))]
+        [(and (> k (compare_r pol1 pol2)) (< k (- (+ (compare_r pol1 pol2) (compare_l pol1 pol2)) 1))) (foldl (λ (i y) (+ (* (list-ref (reverse (largest pol1 pol2)) (- (- (+ (compare_r pol1 pol2) (compare_l pol1 pol2)) k) i)) (list-ref (reverse (smallest pol1 pol2)) i)) y)) 0 (build-list (+ (compare_r pol1 pol2) 1) +))]
+        [else (foldl (λ (i y) (+ (* (list-ref (reverse (largest pol1 pol2)) (- (- (+ (compare_r pol1 pol2) (compare_l pol1 pol2)) k) i)) (list-ref (reverse (smallest pol1 pol2)) i)) y)) 0 (build-list (+ (- (+ (compare_r pol1 pol2) (compare_l pol1 pol2)) k) 1) +))]
+        )
+        )
+
+(define (multiply pol1 pol2)
+  (map (λ (k) (field pol1 pol2 k)) (build-list (+ (+ (compare_r pol1 pol2) (compare_l pol1 pol2)) 1) +))
+  )
+      

@@ -1,0 +1,36 @@
+#lang racket
+
+(define (% a b)
+  (remainder a b)
+  )
+
+(define (length a)
+  (define (iter lst rez)
+    (if (empty? lst) rez
+        (iter (cdr lst) (+ rez 1))
+        )
+    )
+  (iter a 0)
+  )
+
+(define (find a k)
+  (define (iter num chiffre lst)
+    (cond [(= chiffre k) num]
+          [else (iter (+ num 1) (car lst) (cdr lst))]
+          )
+    )
+  (iter 0 (car a) a)
+  )
+
+(define (check a)
+  (define (iter chiffre lst)
+    (cond [(= (% chiffre 2) 0) (if (empty? lst)
+                                   #t
+                                   (iter (car lst) (cdr lst))
+                                   )
+                               ]
+          [else #f]
+          )
+    )
+  (iter (car a) a)
+  )
